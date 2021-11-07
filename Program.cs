@@ -10,6 +10,8 @@ args = new string[] {
     "0",
     "0.01",
     "1",
+    "-e",
+    "csv",
 };
 // ---END-DEBUG--- //
 
@@ -46,6 +48,14 @@ try {
 
     display.Start(configuration);
     await manager.Run();
+
+    display.Aggregate();
+    var metrics = manager.AggregateMetrics();
+
+    display.Export();
+    var exporter = ExporterFactory.Make(configuration.Exporter);
+    using var file = File.OpenWrite(configuration.OutputPath);
+    exporter.Export(metrics, file);
 } catch (Exception e) {
     display.RuntimeFail(e.Message);
     return 2;

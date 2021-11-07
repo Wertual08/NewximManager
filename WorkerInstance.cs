@@ -6,6 +6,7 @@ internal class WorkerInstance {
     private const string resultPrefix = "% Result: ";
 
     public int SequenceId { get; init; }
+    public double Argument { get; init; }
     public string ExecutablePath { get; init; } = string.Empty;
     public string ?ConfigPath { get; init; }
     public IEnumerable<KeyValuePair<string, string>> Arguments { get; init; } = Enumerable.Empty<KeyValuePair<string, string>>();
@@ -16,13 +17,26 @@ internal class WorkerInstance {
         return Task.Run(() => {
             var args = new StringBuilder();
             if (ConfigPath is not null) {
-                args.Append("\"-config\" ");
+                args.Append("-config ");
                 args.Append($"\"{ConfigPath}\" ");
             }
             foreach (var arg in Arguments) {
-                args.Append($"\"-{arg.Key}\" ");
+                args.Append($"-{arg.Key} ");
                 args.Append($"\"{arg.Value}\" ");
             }
+            args.Append($"-report_progress false ");
+            args.Append($"-json_result true ");
+            args.Append($"-report_topology_graph false ");
+            args.Append($"-report_topology_graph_adjacency_matrix false ");
+            args.Append($"-report_routing_table false ");
+            args.Append($"-report_topology_sub_graph false ");
+            args.Append($"-report_topology_sub_graph_adjacency_matrix false ");
+            args.Append($"-report_sub_routing_table false ");
+            args.Append($"-report_possible_routes false ");
+            args.Append($"-report_routes_stats false ");
+            args.Append($"-report_cycle_result false ");
+            args.Append($"-report_buffers false ");
+            args.Append($"-report_flit_trace false ");
 
             using var process = new Process {
                 StartInfo = new ProcessStartInfo {

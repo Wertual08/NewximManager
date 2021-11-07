@@ -1,6 +1,7 @@
 ﻿
 internal class Configuration {
     private const string defaultExecutablePath = "Newxim.exe";
+    private const string defaultOutputPath = "result.csv";
 
     public int WorkersPoolSize { get; private set; } = 8;
     public string ExecutablePath { get; private set; } = defaultExecutablePath;
@@ -11,6 +12,10 @@ internal class Configuration {
     public double? ValueStart { get; private set; }
     public double? ValueStep { get; private set; }
     public double? ValueStop { get; private set; }
+
+    public ExporterType Exporter { get; private set; } = ExporterType.CSV;
+
+    public string OutputPath { get; private set; } = defaultOutputPath;
 
 
     public Configuration(string[] args) {
@@ -30,6 +35,12 @@ internal class Configuration {
             case "-v":
                 ParseValue(args, ref i);
                 break;
+            case "-e":
+                ParseExporter(args, ref i);
+                break;
+            case "-o":
+                ParseOutput(args, ref i);
+                break;
             default:
                 FailUnknownOption(arg);
                 break;
@@ -47,7 +58,6 @@ internal class Configuration {
     }
 
     private void ParseExecutablePath(string[] args, ref int i) {
-        string path;
         if (i + 1 >= args.Length) {
             throw new Exception("Option -x <executalbe> requires a valid executable path");
         }
@@ -55,7 +65,6 @@ internal class Configuration {
     }
 
     private void ParseConfigPath(string[] args, ref int i) {
-        string path;
         if (i + 1 >= args.Length) {
             throw new Exception("Option -c <config> requires a valid config path");
         }
@@ -80,6 +89,23 @@ internal class Configuration {
             throw new Exception("Option -v <stop> requires a real value that is grater than <start>");
         }
         ValueStop = stop;
+    }
+
+    private void ParseExporter(string[] args, ref int i) {
+        if (i + 1 >= args.Length) {
+            throw new Exception("Option -e <exporter> requires a valid config path");
+        }
+        if (!Enum.TryParse<ExporterType>(args[++i], true, out var exporter)) {
+            throw new Exception($"Invalid exporter. Allowed types: {string.Join(", ", Enum.GetNames<ExporterType>())}");
+        }
+        Exporter = exporter;
+    }
+
+    private void ParseOutput(string[] args, ref int i) {
+        if (i + 1 >= args.Length) {
+            throw new Exception("Option -o <path> requires a file name");
+        }
+        OutputPath = args[++i];
     }
 
     private void FailUnknownOption(string arg) {

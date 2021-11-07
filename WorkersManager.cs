@@ -32,6 +32,7 @@ internal class WorkersManager {
 
         var instance = new WorkerInstance {
             SequenceId = id,
+            Argument = value,
             ExecutablePath = ExecutablePath,
             ConfigPath = ConfigPath,
             Arguments = arguments,
@@ -64,5 +65,15 @@ internal class WorkersManager {
             instancesFinished += activeInstances.Count;
             ProgressChanged?.Invoke(this, new ProgressEventArgs((double)instancesFinished / instancesTotal));
         });
+    }
+
+    public MetricsAggregation AggregateMetrics() {
+        var metricsAggregation = new MetricsAggregation();
+        foreach (var instance in instances) {
+            instance.Result?.Add("Squence ID", instance.SequenceId);
+            instance.Result?.Add("Argument", instance.Argument);
+            metricsAggregation.Add(instance.Result);
+        }
+        return metricsAggregation;
     }
 }

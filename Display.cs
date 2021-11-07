@@ -18,12 +18,21 @@ internal class Display {
         Console.WriteLine($"Config:     {configuration.ConfigPath}");
         Console.WriteLine($"Argument:   -{configuration.ValueArgument} {configuration.ValuePayload}");
         Console.WriteLine($"Values:     [{configuration.ValueStart}, {configuration.ValueStep}, {configuration.ValueStop}]");
-        Console.Write($"Progress: ");
+        Console.WriteLine($"Output:     {configuration.OutputPath}");
+        Console.Write($"Progress:   ");
 
         progressInitialCursorLeft = Console.CursorLeft;
         progressInitialCursorTop = Console.CursorTop;
         UpdateProgress(0);
         stopwatch.Start();
+    }
+
+    public void Aggregate() {
+        Console.WriteLine("Aggregating metrics...");
+    }
+
+    public void Export() {
+        Console.WriteLine("Exporting metrics...");
     }
 
     public void ConfigurationFail(string message) {
