@@ -13,8 +13,7 @@ internal class WorkersManager {
     public double ValueStep { get; init; }
     public double ValueStop { get; init; } 
 
-    public string ValueArgument { get; init; } = string.Empty;
-    public string ValuePayload { get; init; } = string.Empty;
+    public IDictionary<string, string> Arguments { get; init; }
 
     public event EventHandler<ProgressEventArgs>? ProgressChanged;
 
@@ -26,9 +25,10 @@ internal class WorkersManager {
             return false;
         }
 
-        var arguments = new Dictionary<string, string> {
-            { $"-{ValueArgument}", ValuePayload.Replace("%", value.ToString()) }
-        };
+        var arguments = new Dictionary<string, string>();
+        foreach (var argument in Arguments) {
+            arguments.Add(argument.Key, argument.Value.Replace("%", value.ToString()));
+        }
 
         var instance = new WorkerInstance {
             SequenceId = id,

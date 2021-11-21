@@ -16,9 +16,11 @@ internal class Display {
         Console.WriteLine($"Threads:    {configuration.WorkersPoolSize}");
         Console.WriteLine($"Executalbe: {configuration.ExecutablePath}");
         Console.WriteLine($"Config:     {configuration.ConfigPath}");
-        Console.WriteLine($"Argument:   -{configuration.ValueArgument} {configuration.ValuePayload}");
         Console.WriteLine($"Values:     [{configuration.ValueStart}, {configuration.ValueStep}, {configuration.ValueStop}]");
         Console.WriteLine($"Output:     {configuration.OutputPath}");
+        foreach (var argument in configuration.Arguments) {
+            Console.WriteLine($"Argument:   {argument.Key} {argument.Value}");
+        }
         Console.Write($"Progress:   ");
 
         progressInitialCursorLeft = Console.CursorLeft;

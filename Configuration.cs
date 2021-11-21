@@ -7,8 +7,6 @@ internal class Configuration {
     public string ExecutablePath { get; private set; } = defaultExecutablePath;
     public string? ConfigPath { get; private set; }
 
-    public string? ValueArgument { get; private set; }
-    public string? ValuePayload { get; private set; }
     public double? ValueStart { get; private set; }
     public double? ValueStep { get; private set; }
     public double? ValueStop { get; private set; }
@@ -16,6 +14,8 @@ internal class Configuration {
     public ExporterType Exporter { get; private set; } = ExporterType.CSV;
 
     public string OutputPath { get; private set; } = defaultOutputPath;
+
+    public IDictionary<string, string> Arguments { get; private set; } = new Dictionary<string, string>();
 
 
     public Configuration(string[] args) {
@@ -42,7 +42,11 @@ internal class Configuration {
                 ParseOutput(args, ref i);
                 break;
             default:
-                FailUnknownOption(arg);
+                if (arg.StartsWith("--")) {
+                    ParseArgument(args, ref i);
+                } else {
+                    FailUnknownOption(arg);
+                }
                 break;
             }
         }
@@ -73,10 +77,8 @@ internal class Configuration {
 
     private void ParseValue(string[] args, ref int i) {
         if (i + 5 >= args.Length) {
-            throw new Exception("Option -v <option> <value> <start> <step> <stop> requires five arguments");
+            throw new Exception("Option -v <start> <step> <stop> requires five arguments");
         }
-        ValueArgument = args[++i];
-        ValuePayload = args[++i];
         if (!double.TryParse(args[++i], out double start)) {
             throw new Exception("Option -v <start> requires a real value");
         }
@@ -108,12 +110,19 @@ internal class Configuration {
         OutputPath = args[++i];
     }
 
+    private void ParseArgument(string[] args, ref int i) {
+        if (i + 1 >= args.Length) {
+            throw new Exception($"Passthrough argument {args[i]} <value> requires parameter");
+        }
+        Arguments.Add(args[i].Substring(1), args[++i]);
+    }
+
     private void FailUnknownOption(string arg) {
         throw new Exception($"Unknown option [{arg}]");
     }
 
     private void Check() {
-        if (ValueArgument is null) {
+        if (ValueStart is null) {
             throw new Exception("Option -v is required");
         }
         if (!File.Exists(ExecutablePath)) {

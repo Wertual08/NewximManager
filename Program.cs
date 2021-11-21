@@ -5,13 +5,14 @@ args = new string[] {
     "-c",
     "../../../../Newxim/config.yml",
     "-v",
-    "packet_injection_rate",
-    "%",
     "0",
     "0.01",
     "1",
     "-e",
     "csv",
+
+    "--packet_injection_rate",
+    "%",
 };
 // ---END-DEBUG--- //
 
@@ -34,11 +35,10 @@ try {
         WorkersPoolSize = configuration.WorkersPoolSize,
         ExecutablePath = configuration.ExecutablePath,
         ConfigPath = configuration.ConfigPath,
-        ValueArgument = configuration.ValueArgument,
-        ValuePayload = configuration.ValuePayload,
         ValueStart = configuration.ValueStart.Value,
         ValueStep = configuration.ValueStep.Value,
         ValueStop = configuration.ValueStop.Value,
+        Arguments = configuration.Arguments,
     };
     manager.ProgressChanged += (object? sender, ProgressEventArgs e) => {
         lock (display) {
