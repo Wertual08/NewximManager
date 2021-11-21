@@ -7,18 +7,23 @@ args = new string[] {
     "-v",
     "0",
     "0.01",
-    "1",
+    "0.4",
     "-e",
     "csv",
+    "-t",
+    "8",
 
     "--packet_injection_rate",
     "%",
+
+    "--routing_algorithm",
+    "XY_YX"
 };
 // ---END-DEBUG--- //
 
 
 var display = new Display {
-    Version = "0.0.0.0",
+    Version = "0.0.0.1",
 };
 display.Info();
 

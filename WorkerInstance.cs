@@ -21,7 +21,7 @@ internal class WorkerInstance {
                 args.Append($"\"{ConfigPath}\" ");
             }
             foreach (var arg in Arguments) {
-                args.Append($"-{arg.Key} ");
+                args.Append($"{arg.Key} ");
                 args.Append($"\"{arg.Value}\" ");
             }
             args.Append($"-report_progress false ");
