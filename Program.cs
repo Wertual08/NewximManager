@@ -64,7 +64,9 @@ try {
 }
 
 bool error = false;
-foreach (var configuration in configurations) {
+for (int i = 0; i < configurations.Count; i++) {
+    var configuration = configurations[i];
+
     try {
         var manager = new WorkersManager {
             WorkersPoolSize = configuration.WorkersPoolSize,
@@ -81,7 +83,7 @@ foreach (var configuration in configurations) {
             }
         };
 
-        display.Start(configuration);
+        display.Start(i, configuration);
         await manager.Run();
 
         display.Aggregate();
@@ -91,6 +93,8 @@ foreach (var configuration in configurations) {
         var exporter = ExporterFactory.Make(configuration.Exporter);
         using var file = File.Create(configuration.OutputPath);
         exporter.Export(metrics, file);
+
+        display.Stop();
     } catch (Exception e) {
         display.RuntimeFail(e.Message);
         error = true;

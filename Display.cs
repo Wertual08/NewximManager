@@ -13,10 +13,11 @@ internal class Display {
 
     public void Info() {
         Console.WriteLine($"Newxim manager V{Version}");
+        Console.WriteLine();
     }
 
-    public void Start(Configuration configuration) {
-        Console.WriteLine("Running simulation...");
+    public void Start(int index, Configuration configuration) {
+        Console.WriteLine($"[{index}] Running simulation...");
         Console.WriteLine($"Threads:    {configuration.WorkersPoolSize}");
         Console.WriteLine($"Executalbe: {configuration.ExecutablePath}");
         Console.WriteLine($"Config:     {configuration.ConfigPath}");
@@ -39,6 +40,10 @@ internal class Display {
 
     public void Export() {
         Console.WriteLine("Exporting metrics...");
+    }
+
+    public void Stop() {
+        Console.WriteLine();
     }
 
     public void ConfigurationFail(string message) {
