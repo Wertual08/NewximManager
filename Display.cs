@@ -1,5 +1,8 @@
 ﻿using System.Diagnostics;
 
+namespace NewximManager;
+
+
 internal class Display {
     private int progressInitialCursorLeft;
     private int progressInitialCursorTop;
@@ -9,10 +12,11 @@ internal class Display {
     public int ProgressLength { get; init; } = 40;
 
     public void Info() {
-        Console.WriteLine($"Running Newxim manager V{Version}...");
+        Console.WriteLine($"Newxim manager V{Version}");
     }
 
     public void Start(Configuration configuration) {
+        Console.WriteLine("Running simulation...");
         Console.WriteLine($"Threads:    {configuration.WorkersPoolSize}");
         Console.WriteLine($"Executalbe: {configuration.ExecutablePath}");
         Console.WriteLine($"Config:     {configuration.ConfigPath}");

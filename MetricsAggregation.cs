@@ -1,4 +1,8 @@
-﻿internal class MetricsAggregation {
+﻿namespace NewximManager; 
+
+
+
+internal class MetricsAggregation {
     public List<string> Headers { get; private set; } = new List<string>();
     public List<List<double?>> Values { get; private set; } = new List<List<double?>>();
 

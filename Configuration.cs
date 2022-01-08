@@ -1,22 +1,25 @@
-﻿
+﻿namespace NewximManager;
+
 internal class Configuration {
     private const string defaultExecutablePath = "Newxim.exe";
     private const string defaultOutputPath = "result.csv";
 
-    public int WorkersPoolSize { get; private set; } = 8;
-    public string ExecutablePath { get; private set; } = defaultExecutablePath;
-    public string? ConfigPath { get; private set; }
+    public int WorkersPoolSize { get; set; } = 8;
+    public string ExecutablePath { get; set; } = defaultExecutablePath;
+    public string? ConfigPath { get; set; }
 
-    public double? ValueStart { get; private set; }
-    public double? ValueStep { get; private set; }
-    public double? ValueStop { get; private set; }
+    public double? ValueStart { get; set; }
+    public double? ValueStep { get; set; }
+    public double? ValueStop { get; set; }
 
-    public ExporterType Exporter { get; private set; } = ExporterType.CSV;
+    public ExporterType Exporter { get; set; } = ExporterType.CSV;
 
-    public string OutputPath { get; private set; } = defaultOutputPath;
+    public string OutputPath { get; set; } = defaultOutputPath;
 
-    public IDictionary<string, string> Arguments { get; private set; } = new Dictionary<string, string>();
+    public IDictionary<string, string> Arguments { get; set; } = new Dictionary<string, string>();
 
+    public Configuration() {
+    }
 
     public Configuration(string[] args) {
         for (int i = 0; i < args.Length; i++) {
@@ -50,8 +53,6 @@ internal class Configuration {
                 break;
             }
         }
-
-        Check();
     }
 
     private void ParseWorkersPoolSize(string[] args, ref int i) {
@@ -121,7 +122,7 @@ internal class Configuration {
         throw new Exception($"Unknown option [{arg}]");
     }
 
-    private void Check() {
+    public void Check() {
         if (ValueStart is null) {
             throw new Exception("Option -v is required");
         }

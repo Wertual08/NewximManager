@@ -2,6 +2,10 @@
 using System.Text;
 using System.Text.Json;
 
+namespace NewximManager;
+
+
+
 internal class WorkerInstance {
     private const string resultPrefix = "% Result: ";
 

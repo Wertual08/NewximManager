@@ -1,4 +1,7 @@
-﻿
+﻿namespace NewximManager;
+
+
+
 internal class WorkersManager {
     private List<WorkerInstance> instances = new ();
     private List<Task> activeInstances = new ();

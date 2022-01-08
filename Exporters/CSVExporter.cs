@@ -1,5 +1,9 @@
 ﻿using System.Text;
 
+namespace NewximManager.Exporters;
+
+
+
 internal class CSVExporter : IExporter {
     private string Escape(string value) {
         return $"\"{value.Replace("\"", "\"\"")}\"";

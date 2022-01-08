@@ -1,0 +1,30 @@
+﻿configurations:
+  - output_path: supershit.csv
+    executable_path: ../../../../bin/x64/Release/Newxim.exe
+    config_path: ../../../../Newxim/config.yml
+    value_start: 0
+    value_step: 0.01
+    value_stop: 0.4
+    exporter: CSV
+    workers_pool_size: 8
+    arguments:
+      packet_injection_rate: '%'
+      topology: TORUS
+      routing_algorithm: TABLE_BASED
+      selection_strategy: RANDOM
+      #topology_args: '[64, 5, 6]'
+
+  - output_path: supershit2.csv
+    executable_path: ../../../../bin/x64/Release/Newxim.exe
+    config_path: ../../../../Newxim/config.yml
+    value_start: 0
+    value_step: 0.01
+    value_stop: 0.4
+    exporter: CSV
+    workers_pool_size: 8
+    arguments:
+      packet_injection_rate: '%'
+      topology: TORUS
+      routing_algorithm: TABLE_BASED
+      selection_strategy: RANDOM
+      #topology_args: '[64, 5, 6]'
