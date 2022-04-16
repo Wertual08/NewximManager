@@ -3,42 +3,6 @@ using NewximManager.Exporters;
 
 
 
-// -----DEBUG----- //
-args = new string[] { 
-    //"-x",
-    //"../../../../bin/x64/Release/Newxim.exe",
-    //"-c",
-    //"../../../../Newxim/config.yml",
-    //"-v",
-    //"0",
-    //"0.01",
-    //"0.4",
-    //"-e",
-    //"csv",
-    //"-t",
-    //"8",
-
-    //"--packet_injection_rate",
-    //"%",
-
-    //"--topology",
-    //"TORUS",
-
-    ////"--topology_args",
-    ////"[64, 5, 6]",
-
-    //"--routing_algorithm",
-    //"TABLE_BASED",
-
-    //"--selection_strategy",
-    //"RANDOM",
-
-    "-config",
-    "../../../config.yml"
-};
-// ---END-DEBUG--- //
-
-
 var display = new Display {
     Version = "0.0.0.2",
 };
@@ -72,12 +36,12 @@ for (int i = 0; i < configurations.Count; i++) {
             WorkersPoolSize = configuration.WorkersPoolSize,
             ExecutablePath = configuration.ExecutablePath,
             ConfigPath = configuration.ConfigPath,
-            ValueStart = configuration.ValueStart.Value,
-            ValueStep = configuration.ValueStep.Value,
-            ValueStop = configuration.ValueStop.Value,
+            ValueStart = configuration.ValueStart!.Value,
+            ValueStep = configuration.ValueStep!.Value,
+            ValueStop = configuration.ValueStop!.Value,
             Arguments = configuration.Arguments,
         };
-        manager.ProgressChanged += (object sender, ProgressEventArgs e) => {
+        manager.ProgressChanged += (object? sender, ProgressEventArgs e) => {
             lock (display) {
                 display.UpdateProgress(e.Progress);
             }

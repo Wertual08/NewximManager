@@ -16,7 +16,7 @@ internal class WorkersManager {
     public double ValueStep { get; init; }
     public double ValueStop { get; init; } 
 
-    public IDictionary<string, string> Arguments { get; init; }
+    public IDictionary<string, string> Arguments { get; init; } = new Dictionary<string, string>();
 
     public event EventHandler<ProgressEventArgs>? ProgressChanged;
 
@@ -75,7 +75,7 @@ internal class WorkersManager {
         foreach (var instance in instances) {
             instance.Result?.Add("Squence ID", instance.SequenceId);
             instance.Result?.Add("Argument", instance.Argument);
-            metricsAggregation.Add(instance.Result);
+            metricsAggregation.Add(instance.Result!);
         }
         return metricsAggregation;
     }

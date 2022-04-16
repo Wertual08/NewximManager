@@ -6,7 +6,7 @@ internal class Configuration {
 
     public int WorkersPoolSize { get; set; } = 8;
     public string ExecutablePath { get; set; } = defaultExecutablePath;
-    public string ConfigPath { get; set; }
+    public string ConfigPath { get; set; } = string.Empty;
 
     public double? ValueStart { get; set; }
     public double? ValueStep { get; set; }

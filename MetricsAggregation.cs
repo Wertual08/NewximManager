@@ -6,7 +6,7 @@ internal class MetricsAggregation {
     public List<string> Headers { get; private set; } = new List<string>();
     public List<List<double?>> Values { get; private set; } = new List<List<double?>>();
 
-    public void Add(IDictionary<string, double>? entries) {
+    public void Add(IDictionary<string, double> entries) {
         ArgumentNullException.ThrowIfNull(nameof(entries));
 
         var row = new List<double?>(Headers.Count);

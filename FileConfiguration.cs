@@ -7,8 +7,8 @@ namespace NewximManager;
 
 internal class FileConfiguration {
     private class Node {
-        public Configuration Common { get; set; }
-        public List<Configuration> Configurations { get; set; }
+        public Configuration? Common { get; init; }
+        public List<Configuration>? Configurations { get; init; }
     }
 
     public List<Configuration> Configurations { get; private set; }
@@ -31,9 +31,9 @@ internal class FileConfiguration {
             .Build();
 
         var node = deserializer.Deserialize<Node>(yml);
-        Configurations = node.Configurations;
+        Configurations = node.Configurations!;
         foreach (var configuration in Configurations) {
-            node.Common.CopyTo(configuration);
+            node.Common!.CopyTo(configuration);
             configuration.Arguments = configuration.Arguments.ToDictionary(item => "-" + item.Key, item => item.Value);
             configuration.Check();
         }
