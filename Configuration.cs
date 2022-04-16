@@ -6,7 +6,7 @@ internal class Configuration {
 
     public int WorkersPoolSize { get; set; } = 8;
     public string ExecutablePath { get; set; } = defaultExecutablePath;
-    public string? ConfigPath { get; set; }
+    public string ConfigPath { get; set; }
 
     public double? ValueStart { get; set; }
     public double? ValueStep { get; set; }
@@ -131,6 +131,36 @@ internal class Configuration {
         }
         if (ConfigPath is not null && !File.Exists(ConfigPath)) {
             throw new Exception($"Configuration file [{ConfigPath}] does not exists");
+        }
+    }
+
+    public void CopyTo(Configuration configuration) {
+        if (WorkersPoolSize != 8) {
+            configuration.WorkersPoolSize = WorkersPoolSize;
+        }
+        if (ExecutablePath != defaultExecutablePath) {
+            configuration.ExecutablePath = ExecutablePath;
+        }
+        if (ConfigPath is not null) {
+            configuration.ConfigPath = ConfigPath;
+        }
+        if (ValueStart is not null) {
+            configuration.ValueStart = ValueStart;
+        }
+        if (ValueStep is not null) {
+            configuration.ValueStep = ValueStep;
+        }
+        if (ValueStop is not null) {
+            configuration.ValueStop = ValueStop;
+        }
+        if (Exporter != ExporterType.CSV) {
+            configuration.Exporter = Exporter;
+        }
+        if (OutputPath != defaultOutputPath) {
+            configuration.OutputPath = OutputPath;
+        }
+        foreach (var argument in Arguments) {
+            configuration.Arguments.Add(argument);
         }
     }
 }

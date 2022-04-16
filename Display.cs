@@ -28,8 +28,7 @@ internal class Display {
         }
         Console.Write($"Progress:   ");
 
-        progressInitialCursorLeft = Console.CursorLeft;
-        progressInitialCursorTop = Console.CursorTop;
+        (progressInitialCursorLeft, progressInitialCursorTop) = Console.GetCursorPosition();
         UpdateProgress(0);
         stopwatch.Start();
     }
@@ -57,9 +56,8 @@ internal class Display {
     }
 
     public void UpdateProgress(double progress) {
-        Console.CursorLeft = progressInitialCursorLeft;
-        Console.CursorTop = progressInitialCursorTop;
-
+        Console.SetCursorPosition(progressInitialCursorLeft, progressInitialCursorTop);
+        
         Console.Write('[');
         string percentage = $"{progress * 100:F2}%";
         int length = ProgressLength - 2;
@@ -78,11 +76,12 @@ internal class Display {
                 Console.Write('-');
             }
         }
-        Console.WriteLine(']');
+        Console.Write(']');
     }
 
     public void Finish() {
         stopwatch.Stop();
+        Console.WriteLine();
         Console.WriteLine($"Done in {stopwatch.ElapsedMilliseconds / 1000.0:F2}s");
     }
 }
